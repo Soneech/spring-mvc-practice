@@ -14,7 +14,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 // replacing applicationContextMVC.xml
 @Configuration
-@ComponentScan("org.soneech.springcourse")
+@ComponentScan("org.soneech.springcourse") // recursive scanning nested packages
 @EnableWebMvc  // enabling web functions
                 // (this is equivalent to tag '<mvc:annotation-driven/>' in xml configuration)
 public class AppConfiguration implements WebMvcConfigurer {  // WebMvcConfigurer used
