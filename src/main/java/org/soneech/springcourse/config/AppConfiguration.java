@@ -1,10 +1,11 @@
-package org.soneech.springcourse.configuration;
+package org.soneech.springcourse.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -17,6 +18,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @ComponentScan("org.soneech.springcourse") // recursive scanning nested packages
 @EnableWebMvc  // enabling web functions
                 // (this is equivalent to tag '<mvc:annotation-driven/>' in xml configuration)
+@PropertySource("classpath:application.properties")
 public class AppConfiguration implements WebMvcConfigurer {  // WebMvcConfigurer used
     private final ApplicationContext applicationContext;
 
