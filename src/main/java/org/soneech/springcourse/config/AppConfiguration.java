@@ -6,16 +6,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 
 // replacing applicationContextMVC.xml
@@ -23,13 +25,15 @@ import javax.sql.DataSource;
 @ComponentScan("org.soneech.springcourse") // recursive scanning nested packages
 @EnableWebMvc  // enabling web functions
                 // (this is equivalent to tag '<mvc:annotation-driven/>' in xml configuration)
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:database.properties")
 public class AppConfiguration implements WebMvcConfigurer {  // WebMvcConfigurer used
     private final ApplicationContext applicationContext;
+    private final Environment environment;
 
     @Autowired
-    public AppConfiguration(ApplicationContext applicationContext) {
+    public AppConfiguration(ApplicationContext applicationContext, Environment environment) {
         this.applicationContext = applicationContext;
+        this.environment = environment;
     }
 
     @Bean
@@ -60,10 +64,10 @@ public class AppConfiguration implements WebMvcConfigurer {  // WebMvcConfigurer
     public DataSource dataSource() {  // bean for jdbc template, to recognize which database to connect to
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/test_db");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("driver")));
+        dataSource.setUrl(environment.getProperty("url"));
+        dataSource.setUsername(environment.getProperty("user"));
+        dataSource.setPassword(environment.getProperty("password"));
 
         return dataSource;
     }
