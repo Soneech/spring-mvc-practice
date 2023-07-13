@@ -1,9 +1,6 @@
 package org.soneech.springcourse.models;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +23,9 @@ public class Person {
     @NotEmpty(message = "Email shouldn't be empty")
     @Email(message = "Not valid email")
     private String email;
+
+    @NotEmpty(message = "Address shouldn't be empty")
+    @Pattern(regexp = "([A-Z]\\w+, ){2}\\d{6}",
+            message = "Address should be in this format: Country, City, Postal code (6 digits)")
+    private String address;
 }
