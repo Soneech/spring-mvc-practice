@@ -1,7 +1,7 @@
 package org.soneech.springcourse.util;
 
 import org.soneech.springcourse.dao.PersonDAO;
-import org.soneech.springcourse.models.Person;
+import org.soneech.springcourse.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

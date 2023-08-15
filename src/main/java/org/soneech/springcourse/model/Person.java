@@ -1,16 +1,19 @@
-package org.soneech.springcourse.models;
+package org.soneech.springcourse.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Entity
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Name shouldn't be empty")
@@ -23,9 +26,4 @@ public class Person {
     @NotEmpty(message = "Email shouldn't be empty")
     @Email(message = "Not valid email")
     private String email;
-
-    @NotEmpty(message = "Address shouldn't be empty")
-    @Pattern(regexp = "([A-Z]\\w+, ){2}\\d{6}",
-            message = "Address should be in this format: Country, City, Postal code (6 digits)")
-    private String address;
 }

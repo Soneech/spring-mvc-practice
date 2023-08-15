@@ -1,8 +1,8 @@
-package org.soneech.springcourse.controllers;
+package org.soneech.springcourse.controller;
 
 import jakarta.validation.Valid;
 import org.soneech.springcourse.dao.PersonDAO;
-import org.soneech.springcourse.models.Person;
+import org.soneech.springcourse.model.Person;
 import org.soneech.springcourse.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +65,7 @@ public class PeopleController {
         if (bindingResult.hasErrors())
             return "people/edit";
 
-        personDAO.update(id, person);
+        personDAO.update(person);
         return "redirect:/people";
     }
 
