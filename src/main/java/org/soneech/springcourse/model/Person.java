@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table
 @NoArgsConstructor
@@ -26,4 +28,7 @@ public class Person {
     @NotEmpty(message = "Email shouldn't be empty")
     @Email(message = "Not valid email")
     private String email;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
 }

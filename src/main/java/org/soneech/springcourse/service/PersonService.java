@@ -1,7 +1,7 @@
 package org.soneech.springcourse.service;
 
 import org.soneech.springcourse.model.Person;
-import org.soneech.springcourse.repository.PeopleRepository;
+import org.soneech.springcourse.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,40 +11,44 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class PeopleService {
-    private final PeopleRepository peopleRepository;
+public class PersonService {
+    private final PersonRepository personRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository) {
-        this.peopleRepository = peopleRepository;
+    public PersonService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     public List<Person> findAll() {
-        return peopleRepository.findAll();
+        return personRepository.findAll();
     }
 
     public Person findById(int id) {
-        Optional<Person> person = peopleRepository.findById(id);
+        Optional<Person> person = personRepository.findById(id);
         return person.orElse(null);
     }
 
     public Optional<Person> findByEmail(String email) {
-        return peopleRepository.findByEmail(email);
+        return personRepository.findByEmail(email);
     }
 
     @Transactional
     public void save(Person person) {
-        peopleRepository.save(person);
+        personRepository.save(person);
     }
 
     @Transactional
     public void update(int id, Person updatedPerson) {
         updatedPerson.setId(id);
-        peopleRepository.save(updatedPerson);
+        personRepository.save(updatedPerson);
     }
 
     @Transactional
     public void delete(int id) {
-        peopleRepository.deleteById(id);
+        personRepository.deleteById(id);
+    }
+
+    public void test() {
+        System.out.println("Testing here with debug. Inside Hibernate transaction");
     }
 }

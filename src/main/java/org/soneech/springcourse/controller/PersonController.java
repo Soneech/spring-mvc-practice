@@ -2,7 +2,8 @@ package org.soneech.springcourse.controller;
 
 import jakarta.validation.Valid;
 import org.soneech.springcourse.model.Person;
-import org.soneech.springcourse.service.PeopleService;
+import org.soneech.springcourse.service.ItemService;
+import org.soneech.springcourse.service.PersonService;
 import org.soneech.springcourse.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,26 +13,26 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/people")
-public class PeopleController {
+public class PersonController {
 
-    private final PeopleService peopleService;
+    private final PersonService personService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
-        this.peopleService = peopleService;
+    public PersonController(PersonService personService, PersonValidator personValidator) {
+        this.personService = personService;
         this.personValidator = personValidator;
     }
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("people", peopleService.findAll());
+        model.addAttribute("people", personService.findAll());
         return "people/index";
     }
 
     @GetMapping("/{id}")  // use id in url
     public String showPerson(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", peopleService.findById(id));
+        model.addAttribute("person", personService.findById(id));
         return "people/show";
     }
 
@@ -47,13 +48,13 @@ public class PeopleController {
         if (bindingResult.hasErrors())
             return "people/new";
 
-        peopleService.save(person);
+        personService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String updatePage(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", peopleService.findById(id));
+        model.addAttribute("person", personService.findById(id));
         return "people/edit";
     }
 
@@ -64,13 +65,13 @@ public class PeopleController {
 
         if (bindingResult.hasErrors())
             return "people/edit";
-        peopleService.update(id, person);
+        personService.update(id, person);
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        peopleService.delete(id);
+        personService.delete(id);
         return "redirect:/people";
     }
 }
