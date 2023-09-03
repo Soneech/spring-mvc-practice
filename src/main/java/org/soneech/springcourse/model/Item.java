@@ -5,14 +5,12 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +23,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
+
+    @Override
+    public String toString() {
+        return String.format("Item{id=%d, name=%s}", id, name);
+    }
 }

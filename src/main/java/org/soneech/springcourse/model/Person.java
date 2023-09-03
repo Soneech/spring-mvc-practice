@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +42,11 @@ public class Person {
 
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Person{id=%d, name=%s, email=%s, dateOfBirth=%s, createdAt=%s}",
+                id, name, email, dateOfBirth.toString(), createdAt.toString());
+    }
 }

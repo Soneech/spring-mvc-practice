@@ -2,3 +2,4 @@
 /target/*
 /src/main/resources/hibernate.properties
 /.idea/discord.xml
+/.idea/dbnavigator.xml

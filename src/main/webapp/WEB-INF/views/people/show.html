@@ -10,7 +10,13 @@
         <p th:text="${'Date of birth: ' + person.getDateOfBirth()}"/>
         <p th:text="${'Created at: ' + person.getCreatedAt()}"/>
 
-        <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+        <p>Items list:</p>
+        <div th:each="item: ${items}">
+            <a th:text="${item.getName()}">Item</a>
+        </div>
+        <br>
+
+        <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit person</a>
 
         <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
             <input type="submit" value="Delete">

@@ -1,8 +1,9 @@
 package org.soneech.springcourse.controller;
 
 import jakarta.validation.Valid;
+import org.soneech.springcourse.dao.PersonDAO;
 import org.soneech.springcourse.model.Person;
-import org.soneech.springcourse.service.ItemService;
+import org.soneech.springcourse.repository.ItemRepository;
 import org.soneech.springcourse.service.PersonService;
 import org.soneech.springcourse.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,29 @@ import org.springframework.web.bind.annotation.*;
 public class PersonController {
 
     private final PersonService personService;
+    private final ItemRepository itemRepository;
     private final PersonValidator personValidator;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public PersonController(PersonService personService, PersonValidator personValidator) {
+    public PersonController(PersonService personService, ItemRepository itemRepository,
+                            PersonValidator personValidator, PersonDAO personDAO) {
         this.personService = personService;
+        this.itemRepository = itemRepository;
         this.personValidator = personValidator;
+        this.personDAO = personDAO;
+    }
+
+    @GetMapping("test-problem")
+    public String testProblem() {
+        personDAO.testProblem();
+        return "redirect:/people";
+    }
+
+    @GetMapping("problem-solution")
+    public String problemSolution() {
+        personDAO.problemSolution();
+        return "redirect:/people";
     }
 
     @GetMapping
@@ -32,7 +50,9 @@ public class PersonController {
 
     @GetMapping("/{id}")  // use id in url
     public String showPerson(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personService.findById(id));
+        Person person = personService.findById(id);
+        model.addAttribute("person", person);
+        model.addAttribute("items", itemRepository.findByOwner(person));
         return "people/show";
     }
 
