@@ -1,11 +1,13 @@
 package org.soneech.springcourse.service;
 
+import org.soneech.springcourse.model.Mood;
 import org.soneech.springcourse.model.Person;
 import org.soneech.springcourse.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +36,8 @@ public class PersonService {
 
     @Transactional
     public void save(Person person) {
+        person.setMood(Mood.CALM);  // will be converted to 4 (index) - ordinal type
+        person.setCreatedAt(new Date());
         personRepository.save(person);
     }
 
